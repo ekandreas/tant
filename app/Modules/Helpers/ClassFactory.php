@@ -2,39 +2,32 @@
 
 namespace App\Modules\Helpers;
 
+use App\Modules\Fields\FieldsInterface;
 use Illuminate\Support\Collection;
 
 class ClassFactory
 {
     public static function make($functionClass): Collection
     {
-        $me = new static;
+        $factory = new static;
 
-        $result = collect([]);
-
-        switch ($functionClass) {
-
-            case 'fields':
-                $result = $me->fields();
-                break;
-
-            default:
-                break;
+        if ($functionClass === 'fields') {
+            return $factory->fields();
         }
 
-        return $result;
+        return collect([]);
     }
 
     public function fields(): Collection
     {
         $result = collect([]);
         foreach (glob(base_path('app/Modules/Fields/*.php')) as $filename) {
-            $base = "App\\Modules\\Fields\\";
-            $filename = pathinfo($filename)['filename'];
-            if (in_array("{$base}FieldsInterface", class_implements("{$base}{$filename}"))) {
-                $result->push("{$base}{$filename}");
+            $fqcn = sprintf('App\\Modules\\Fields\\%s', pathinfo($filename)['filename']);
+            if (class_exists($fqcn) && in_array(FieldsInterface::class, class_implements($fqcn), true)) {
+                $result->push($fqcn);
             }
         }
+
         return $result;
     }
 }
