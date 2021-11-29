@@ -2,8 +2,10 @@
 
 namespace App\Modules\Fields;
 
+use Tanthammar\TallForms\BaseField;
+
 interface FieldInterface {
 
-    public function field();
+    public function field() : BaseField;
 
 }

@@ -31,7 +31,7 @@ class ClassFactory
         foreach (glob(base_path('app/Modules/Fields/*.php')) as $filename) {
             $base = "App\\Modules\\Fields\\";
             $filename = pathinfo($filename)['filename'];
-            if (in_array("{$base}FieldsInterface", class_implements("{$base}{$filename}"))) {
+            if (in_array("{$base}FieldInterface", class_implements("{$base}{$filename}"))) {
                 $result->push("{$base}{$filename}");
             }
         }

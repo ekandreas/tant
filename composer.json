@@ -13,6 +13,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "*",
+        "spatie/laravel-ray": "^1.26",
         "tanthammar/tall-forms": "7.9.9.3"
     },
     "require-dev": {
